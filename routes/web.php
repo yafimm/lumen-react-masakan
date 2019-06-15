@@ -14,3 +14,10 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/user', 'UserController@index');
+$router->get('/user/{username}', 'UserController@show');
+$router->post('/user', 'UserController@create');
+
+$router->get('/akses', 'AksesController@index');
+$router->get('/akses/{id}', 'AksesController@show');
