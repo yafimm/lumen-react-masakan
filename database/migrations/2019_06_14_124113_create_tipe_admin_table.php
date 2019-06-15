@@ -14,9 +14,19 @@ class CreateTipeAdminTable extends Migration
     public function up()
     {
         Schema::create('tipe_admin', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('nama_tipe_admin');
         });
+
+
+        Schema::table('admin', function (Blueprint $table){
+    			$table->foreign('id_tipe_admin')
+    				 ->references('id')
+    				 ->on('tipe_admin')
+    				 ->onDelete('cascade')
+    				 ->onUpdate('cascade');
+    		});
+
     }
 
     /**
@@ -26,6 +36,9 @@ class CreateTipeAdminTable extends Migration
      */
     public function down()
     {
+      Schema::table('admin', function(Blueprint $table){
+        $table->dropForeign('admin_id_tipe_admin_foreign');
+      });
         Schema::dropIfExists('tipe_admin');
     }
 }

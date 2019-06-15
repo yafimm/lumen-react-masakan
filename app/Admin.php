@@ -2,26 +2,26 @@
 
 namespace App;
 
-use Illuminate\Auth\Authenticatable;
-use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class Admin extends Model implements AuthenticatableContract, AuthorizableContract
+class Admin extends Model
 {
-    use Authenticatable, Authorizable;
+    protected $table = 'admin';
+
+    protected $primaryKey = 'username';
+
+    public $incrementing = false;
+
 
     protected $fillable = [
-        'name', 'email',
+        'name', 'username', 'password', 'email', 'alamat', 'no_telp'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
     ];
+
+    public function tipe_admin(){
+      return $this->belongsTo('App\Tipe_admin', 'id_tipe_admin');
+    }
 }
