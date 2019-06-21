@@ -23,6 +23,22 @@ class CreateAdminTable extends Migration
             $table->integer('no_telp');
             $table->timestamps();
         });
+
+        Schema::table('video', function (Blueprint $table){
+          $table->foreign('admin')
+             ->references('username')
+             ->on('admin')
+             ->onDelete('cascade')
+             ->onUpdate('cascade');
+        });
+
+        Schema::table('blog', function (Blueprint $table){
+          $table->foreign('admin')
+             ->references('username')
+             ->on('admin')
+             ->onDelete('cascade')
+             ->onUpdate('cascade');
+        });
     }
 
     /**
@@ -32,6 +48,12 @@ class CreateAdminTable extends Migration
      */
     public function down()
     {
+      Schema::table('video', function(Blueprint $table){
+        $table->dropForeign('video_admin_foreign');
+      });
+      Schema::table('blog', function(Blueprint $table){
+        $table->dropForeign('blog_admin_foreign');
+      });
         Schema::dropIfExists('admin');
     }
 }

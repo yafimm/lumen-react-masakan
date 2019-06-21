@@ -32,7 +32,7 @@ class CreateAksesTable extends Migration
         Schema::table('video', function (Blueprint $table){
             $table->foreign('hak_akses')
                 ->references('id')
-                ->on('video')
+                ->on('akses')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -47,6 +47,9 @@ class CreateAksesTable extends Migration
     {
         Schema::table('user_akses', function(Blueprint $table){
           $table->dropForeign('user_akses_id_akses_foreign');
+        });
+        Schema::table('video', function(Blueprint $table){
+          $table->dropForeign('video_hak_akses_foreign');
         });
 
         Schema::dropIfExists('akses');
