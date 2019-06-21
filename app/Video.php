@@ -7,17 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
+    protected $table = 'video';
 
     protected $fillable = [
-        'name', 'email',
+        'judul', 'video', 'deskripsi','admin', 'hak_akses'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-    ];
 }

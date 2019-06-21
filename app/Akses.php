@@ -10,6 +10,8 @@ class Akses extends Model
 
     protected $primaryKey = 'id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nama', 'nilai_akses', 'deskripsi', 'harga'
     ];

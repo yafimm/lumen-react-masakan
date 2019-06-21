@@ -28,6 +28,14 @@ class CreateAksesTable extends Migration
               ->onDelete('cascade')
               ->onUpdate('cascade');
         });
+
+        Schema::table('video', function (Blueprint $table){
+            $table->foreign('hak_akses')
+                ->references('id')
+                ->on('video')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
     }
 
     /**

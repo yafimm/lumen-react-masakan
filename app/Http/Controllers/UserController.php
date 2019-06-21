@@ -16,7 +16,8 @@ class UserController extends Controller
     }
 
 
-    public function index(){
+    public function index()
+    {
         $user = User::all();
         return response()->json([
                   'success' => true,
@@ -26,7 +27,8 @@ class UserController extends Controller
     }
 
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $password = Hash::make($request->password);
         $data = [
                  'username' => $request->username,
