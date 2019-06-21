@@ -27,7 +27,7 @@ class UserController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $password = Hash::make($request->password);
         $data = [
@@ -85,6 +85,57 @@ class UserController extends Controller
                 'data' => Null,
               ], 400);
         }
+    }
+
+    public function update(Request $request, $username)
+    {
+          $input = $request->all();
+          $user = User::find($username);
+          if($user)
+          {
+                $update = $user->update($input);
+                if($update){
+                      $user = User::find($username); //update data terbaru
+                      return response()->json([
+                             'success' => true,
+                             'code' => 201,
+                             'message' => 'data berhasil diubah',
+                             'data' => $user,
+                             ], 201);
+                }
+          }
+          // Kalo gagal nanti bakal dilempar kesini
+          return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => 'data tidak ditemukan',
+                'data' => ''
+              ], 400);
+    }
+
+    public function delete($username)
+    {
+          $user = User::find($username);
+          if($user)
+          {
+                $delete = $user->delete();
+                if($delete)
+                {
+                      return response()->json([
+                               'success' => true,
+                               'code' => 201,
+                               'message' => 'Hapus data berhasil dilakukan',
+                               'data' => $user
+                               ], 201);
+                }
+          }
+
+          return response()->json([
+                   'success' => true,
+                   'code' => 400,
+                   'message' => 'Data Tidak ditemukan',
+                   'data' => NULL
+                   ], 201);
     }
 
 

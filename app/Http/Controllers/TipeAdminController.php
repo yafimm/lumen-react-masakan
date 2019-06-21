@@ -23,7 +23,7 @@ class TipeAdminController extends Controller
              ], 200);
     }
 
-    public function create(Request $request){
+    public function store(Request $request){
       $data = Tipe_admin::create(['nama_tipe_admin' => $request->nama_tipe_admin]);
       if($data){
             return response()->json([
@@ -59,6 +59,33 @@ class TipeAdminController extends Controller
                    'data' => null
                  ], 400);
       }
+    }
+
+    public function update(Request $request, $id)
+    {
+          $input = $request->all();
+          $Tipe = Tipe_admin::find($id);
+          $Tipe->update($input);
+          if($Tipe)
+          {
+                $Tipe = $Tipe->update($input);
+                if($Tipe){
+                      $Tipe = Tipe_admin::find($id);
+                      return response()->json([
+                             'success' => true,
+                             'code' => 201,
+                             'message' => 'data berhasil diubah',
+                             'data' => $Tipe,
+                             ], 201);
+                }
+          }
+          // Kalo gagal nanti bakal dilempar kesini
+          return response()->json([
+            'success' => false,
+            'code' => 400,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+          ], 400);
     }
 
     public function delete($id){

@@ -111,4 +111,26 @@ class VideoController extends Controller
           }
     }
 
+    public function delete($id)
+    {
+          $Video = Video::find($id);
+          // $this->hapusVideo($Video);
+          $data = $Akses->delete();
+          if($data){
+                return response()->json([
+                  'success' => true,
+                  'code' => 201,
+                  'message' => 'data berhasil dihapus',
+                  'data' => $Video
+                ], 201);
+          }else{
+                return response()->json([
+                  'success' => false,
+                  'code' => 400,
+                  'message' => 'data gagal dihapus',
+                  'data' => ''
+                ], 400);
+          }
+    }
+
 }

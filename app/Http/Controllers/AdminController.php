@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Admin;
+use App\Tipe_admin;
 
 class AdminController extends Controller
 {
@@ -23,8 +24,9 @@ class AdminController extends Controller
              ], 200);
     }
 
-    public function register(Request $request){
-      $data = Tipe_admin::create(['nama_tipe_admin' => $request->nama_tipe_admin]);
+    public function store(Request $request){
+      $input = $request->all();
+      $data = Admin::create($input);
       if($data){
             return response()->json([
                      'success' => true,
@@ -44,8 +46,8 @@ class AdminController extends Controller
 
     public function show($username){
       $data = Admin::find($username);
-      $tipe = Admin::find($username)->tipe_admin;
       if($data){
+          $tipe = Admin::find($username)->tipe_admin;
           return response()->json([
                    'success' => true,
                    'code' => 200,
@@ -60,6 +62,32 @@ class AdminController extends Controller
                    'data' => null
                  ], 400);
       }
+    }
+
+    public function update(Request $request, $username)
+    {
+          $input = $request->all();
+          $Admin = Admin::find($username);
+          if($Admin)
+          {
+                $Admin = $Admin->update($input);
+                if($Admin){
+                      return response()->json([
+                             'success' => true,
+                             'code' => 201,
+                             'message' => 'data berhasil diubah',
+                             'data' => $input,
+                             ], 201);
+                }
+          }
+          // Kalo gagal nanti bakal dilempar kesini
+          return response()->json([
+            'success' => false,
+            'code' => 400,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+          ], 400);
+
     }
 
     public function delete($username){
@@ -78,7 +106,7 @@ class AdminController extends Controller
                      'code' => 400,
                      'message' => 'Data Tidak ditemukan',
                      'data' => NULL
-                     ], 201);
+                   ], 400);
         }
     }
 

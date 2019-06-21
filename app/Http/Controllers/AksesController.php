@@ -49,6 +49,7 @@ class AksesController extends Controller
           $input = $request->all();
           $Akses = Akses::find($id);
           $Akses = $Akses->update($input);
+          // return dd($request);
           if($Akses){
                 return response()->json([
                        'success' => true,
@@ -66,25 +67,6 @@ class AksesController extends Controller
           }
     }
 
-    public function delete($id){
-          $Akses = Akses::find($id);
-          $data = $Akses->delete();
-          if($data){
-                return response()->json([
-                       'success' => true,
-                       'code' => 201,
-                       'message' => 'data berhasil dihapus',
-                       'data' => $data
-                       ], 201);
-          }else{
-                return response()->json([
-                       'success' => false,
-                       'code' => 400,
-                       'message' => 'data gagal dihapus',
-                       'data' => ''
-                     ], 400);
-          }
-    }
 
     public function show($id){
         $dataAkses = Akses::find($id);
@@ -93,5 +75,26 @@ class AksesController extends Controller
               'message' => 'Data is Found!',
               'data' => $dataAkses
             ], 200);
+    }
+
+    public function delete($id)
+    {
+          $Akses = Akses::find($id);
+          $data = $Akses->delete();
+          if($data){
+                return response()->json([
+                  'success' => true,
+                  'code' => 201,
+                  'message' => 'data berhasil dihapus',
+                  'data' => $data
+                ], 201);
+          }else{
+                return response()->json([
+                  'success' => false,
+                  'code' => 400,
+                  'message' => 'data gagal dihapus',
+                  'data' => ''
+                ], 400);
+          }
     }
 }

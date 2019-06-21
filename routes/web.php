@@ -17,7 +17,9 @@ $router->get('/', function () use ($router) {
 
 $router->get('/user', 'UserController@index');
 $router->get('/user/{username}', 'UserController@show');
-$router->post('/user', 'UserController@create');
+$router->post('/user', 'UserController@store');
+$router->put('/user/{username}', 'UserController@update');
+$router->delete('/user/{username}', 'Usercontroller@delete');
 
 $router->get('/akses', 'AksesController@index');
 $router->get('/akses/{id}', 'AksesController@show');
@@ -27,11 +29,15 @@ $router->delete('/akses/{id}', 'AksesController@delete');
 
 $router->get('/tipeadmin', 'TipeAdminController@index');
 $router->get('/tipeadmin/{id}', 'TipeAdminController@show');
-$router->post('/tipeadmin', 'TipeAdminController@create');
+$router->post('/tipeadmin', 'TipeAdminController@store');
+$router->put('/tipeadmin/{id}', 'TipeAdminController@update');
+$router->delete('/tipeadmin/{id}', 'TipeAdminController@delete');
 
 $router->get('/admin', 'AdminController@index');
 $router->get('/admin/{username}', 'AdminController@show');
-$router->post('/admin', 'tipeadmin@register');
+$router->post('/admin', 'AdminController@store');
+$router->put('/admin/{username}', 'AdminController@update');
+$router->delete('/admin/{username}', 'AdminController@delete');
 
 $router->get('/video', 'VideoController@index');
 $router->get('/video/{id}', 'VideoController@show');
