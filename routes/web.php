@@ -42,3 +42,15 @@ $router->delete('/admin/{username}', 'AdminController@delete');
 $router->get('/video', 'VideoController@index');
 $router->get('/video/{id}', 'VideoController@show');
 $router->post('/video', 'VideoController@create');
+
+$router->get('/blog', 'BlogController@index');
+$router->get('/blog/{id}', 'BlogController@show');
+$router->post('/blog', 'BlogController@store');
+$router->put('/blog/{id}', 'BlogController@update');
+$router->delete('/blog/{id}', 'BlogController@delete');
+
+$router->get('/blogkategori', 'BlogKategoriController@index');
+$router->get('/blogkategori/{id}', 'BlogKategoriController@show');
+$router->post('/blogkategori', 'BlogKategoriController@store');
+$router->put('/blogkategori/{id}', 'BlogKategoriController@update');
+$router->deletE('/blogkategori/{id}', 'BlogKategoriController@delete');
