@@ -12,9 +12,26 @@ class UserController extends Controller
 
     public function __construct()
     {
-        //
+        $this->middleware('jwt.auth',['except' => ['login']]);
     }
 
+    public function login(Request $request)
+    {
+        $token = app('auth')->attempt(['username' => $request->username, 'password' => $request->password]);
+        if($token){
+          return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data' => ['token' => $token]
+          ], 200);
+        }else{
+          return response()->json([
+            'success' => false,
+            'message' => 'Failed, Wrong username or password',
+            'data' => ''
+          ], 400);
+        }
+    }
 
     public function index()
     {
