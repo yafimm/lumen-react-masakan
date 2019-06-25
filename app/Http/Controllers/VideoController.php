@@ -20,12 +20,18 @@ class VideoController extends Controller
         'video'   => 'mimes:mp4,mov,ogg,qt',
         'judul' => 'required|string|min:5|max:255',
         'deskripsi' => 'required|string',
+        'thumbnail' => 'sometimes|mimes:jpg,png,svg'
+        'hak_akses' => 'required'
       ];
 
       $messages = [''];
 
       //validate the request.
       $this->validate($request ,$rules);
+    }
+
+    protected function buildFailedValidationResponse(Request $request, array $errors) {
+        return ["code"=> 406 , "message" => "forbidden" , "errors" =>$errors];
     }
 
     private function upload_video(Request $request){

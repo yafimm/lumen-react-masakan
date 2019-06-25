@@ -15,6 +15,33 @@ class UserController extends Controller
         $this->middleware('jwt.auth',['except' => ['login']]);
     }
 
+    private function validator(Request $request)
+    {
+
+        if($request->isMethod('post')){
+          $alamat = 'sometimes|string|min:5|max:50|unique:blog';
+          $no_telp = 'sometimes|regex:/(01)[0-9]{9}/';
+        }else{
+          $alamat = 'required|string|min:5|max:100';
+          $no_telp = 'required|regex:/(01)[0-9]{9}/',
+        }
+        //validation rules.
+        $rules = [
+          'username' => $judul,
+          'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/|confirmed',
+          'nama' => 'required|string|min:6|max:50',
+          'email' => 'required|email|unique:user',
+          'alamat' => $alamat,
+          'no_telp' => $no_telp,
+        ];
+
+        $messages = [''];
+
+        //validate the request.
+        $this->validate($request ,$rules);
+    }
+
+
     public function login(Request $request)
     {
         $token = app('auth')->attempt(['username' => $request->username, 'password' => $request->password]);
@@ -46,6 +73,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $this->validator($request);
         $password = Hash::make($request->password);
         $data = [
                  'username' => $request->username,
@@ -106,6 +134,7 @@ class UserController extends Controller
 
     public function update(Request $request, $username)
     {
+          $this->validator($request);
           $input = $request->all();
           $user = User::find($username);
           if($user)

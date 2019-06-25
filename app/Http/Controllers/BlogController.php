@@ -13,6 +13,27 @@ class BlogController extends Controller
         //
     }
 
+    private function validator(Request $request)
+    {
+
+        if($request->isMethod('post')){
+          $judul = 'required|string|min:5|max:50|unique:blog';
+        }else{
+          $judul = 'required|string|min:5|max:50';
+        }
+        //validation rules.
+        $rules = [
+          'judul' => $judul,
+          'isi_blog' => 'required|string',
+          'id_blog_kategori' => 'required'
+        ];
+
+        $messages = [''];
+
+        //validate the request.
+        $this->validate($request ,$rules);
+    }
+
     public function index()
     {
           $all_blog = Blog::all();
@@ -47,7 +68,9 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+          $this->validator($request);
           $input = $request->all();
+          $input['slug'] = str_slug($request->judul,'-');
           $blog = Blog::create($input);
           if($blog){
                 return response()->json([
@@ -68,6 +91,7 @@ class BlogController extends Controller
 
     public function update(Request $request, $id)
     {
+          $this->validator($request);
           $input = $request->all();
           $blog = Blog::find($id);
           if($blog)
@@ -86,11 +110,11 @@ class BlogController extends Controller
           }
           // Kalo gagal nanti bakal dilempar kesini
           return response()->json([
-            'success' => false,
-            'code' => 400,
-            'message' => 'data tidak ditemukan',
-            'data' => ''
-          ], 400);
+              'success' => false,
+              'code' => 400,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+            ], 400);
     }
 
     public function delete($id)
