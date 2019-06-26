@@ -13,6 +13,19 @@ class BlogKategoriController extends Controller
         //
     }
 
+    private function validator(Request $request)
+    {
+
+        $rules = [
+          'nama_kategori' => 'required|string|min:4|max:255',
+        ];
+
+        $messages = [''];
+
+        //validate the request.
+        $this->validate($request ,$rules);
+    }
+
     public function index()
     {
           $all_blog_kategori = Blog_kategori::all();
@@ -47,6 +60,7 @@ class BlogKategoriController extends Controller
 
     public function store(Request $request)
     {
+          $this->validator($request);
           $input = $request->all();
           $blog_kategori = Blog_kategori::create($input);
           if($blog_kategori){
@@ -68,6 +82,7 @@ class BlogKategoriController extends Controller
 
     public function update(Request $request, $id)
     {
+          $this->validator($request);
           $input = $request->all();
           $blog_kategori = Blog_kategori::find($id);
           if($blog_kategori)

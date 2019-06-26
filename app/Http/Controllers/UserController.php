@@ -23,7 +23,7 @@ class UserController extends Controller
           $no_telp = 'sometimes|regex:/(01)[0-9]{9}/';
         }else{
           $alamat = 'required|string|min:5|max:100';
-          $no_telp = 'required|regex:/(01)[0-9]{9}/',
+          $no_telp = 'required|regex:/(01)[0-9]{9}/';
         }
         //validation rules.
         $rules = [

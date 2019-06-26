@@ -16,10 +16,10 @@ class BlogController extends Controller
     private function validator(Request $request)
     {
 
-        if($request->isMethod('post')){
-          $judul = 'required|string|min:5|max:50|unique:blog';
+        if($request->isMethod('POST')){
+            $judul = 'required|string|min:5|max:50|unique:blog';
         }else{
-          $judul = 'required|string|min:5|max:50';
+            $judul = 'required|string|min:5|max:50';
         }
         //validation rules.
         $rules = [

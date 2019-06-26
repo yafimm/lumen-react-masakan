@@ -12,6 +12,18 @@ class TipeAdminController extends Controller
     {
         //
     }
+    private function validator(Request $request)
+    {
+        //validation rules.
+        $rules = [
+          'nama_tipe_admin' => 'required|string|min:4',
+        ];
+
+        $messages = [''];
+
+        //validate the request.
+        $this->validate($request ,$rules);
+    }
 
     public function index(){
       $data = Tipe_admin::all();
@@ -24,6 +36,7 @@ class TipeAdminController extends Controller
     }
 
     public function store(Request $request){
+      $this->validator($request);
       $data = Tipe_admin::create(['nama_tipe_admin' => $request->nama_tipe_admin]);
       if($data){
             return response()->json([
@@ -63,6 +76,7 @@ class TipeAdminController extends Controller
 
     public function update(Request $request, $id)
     {
+          $this->validator($request);
           $input = $request->all();
           $Tipe = Tipe_admin::find($id);
           $Tipe->update($input);
